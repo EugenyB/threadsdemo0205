@@ -26,12 +26,13 @@ public class Main {
         double delta = (b-a)/nThreads;
         long start = System.currentTimeMillis();
         List<Future<Double>> futures = new ArrayList<>();
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-        for (int i = 0; i < nThreads; i++) {
-            CallableCalculator calculator = new CallableCalculator(a + i * delta, a + (i + 1) * delta, n / nThreads, Math::sin);
-            futures.add(executorService.submit(calculator));
+        try (ExecutorService executorService = Executors.newFixedThreadPool(10)) {
+            for (int i = 0; i < nThreads; i++) {
+                CallableCalculator calculator = new CallableCalculator(a + i * delta, a + (i + 1) * delta, n / nThreads, Math::sin);
+                futures.add(executorService.submit(calculator));
+            }
+            executorService.shutdown();
         }
-        executorService.shutdown();
         try {
             totalSum = 0;
             for (Future<Double> future : futures) {

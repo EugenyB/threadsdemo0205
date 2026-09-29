@@ -4,11 +4,11 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.stream.IntStream;
 
 public class IntegralCalculator {
-    private double a;
-    private double b;
-    private int n;
-    private double h;
-    private DoubleUnaryOperator f;
+    private final double a;
+    private final double b;
+    private final int n;
+    private final double h;
+    private final DoubleUnaryOperator f;
 
     public IntegralCalculator(double a, double b, int n, DoubleUnaryOperator f) {
         this.a = a;
